@@ -1,0 +1,139 @@
+.App {
+  font-family: sans-serif;
+  text-align: center;
+}
+.dayItem {
+  height: 151px;
+  border-right: 1px solid black;
+}
+.visitLine {
+  display: flex;
+  justify-content: center;
+  border: 1px solid black;
+  border-right: 1px solid transparent;
+  width: 250px;
+  font-size: 14px;
+}
+.emptyCell {
+  width: 250px;
+  height: 148px;
+  border: 1px solid gray;
+}
+.emptyField {
+  width: 60%;
+  height: 42px;
+  display: flex;
+  flex-direction: column;
+  font-size: 12px;
+  cursor: pointer;
+}
+.visitTime {
+  width: 20%;
+  text-align: center;
+  height: 25px;
+  padding-top: 17px;
+  font-size: 10px;
+  border-left: 0.5px solid gray;
+  cursor: pointer;
+}
+.doctorNames {
+  height: 42px;
+  display: grid;
+  grid-template-columns: repeat(2, 15px);
+}
+.doctorNames div {
+  padding-top: 2px;
+}
+h2 {
+  margin: 0 auto 5px auto;
+}
+.headerLine {
+  margin: 0 auto;
+  width: 1400px;
+  display: grid;
+  grid-template-columns: repeat(5, 250px) 1fr 1fr;
+}
+.headerLine div {
+  text-align: center;
+  font-weight: bold;
+  border: 1px solid gray;
+}
+#dateLine {
+  text-align: center;
+}
+.calendarContainer {
+  margin: 0 auto;
+  width: 1400px;
+  display: grid;
+  grid-template-columns: repeat(5, 250px) 75px 75px;
+  border: 1px solid gray;
+  box-shadow: 12px 12px 2px 1px rgba(0, 0, 255, 0.2);
+}
+#nextMonthContainer {
+  box-shadow: 12px 12px 2px 1px rgba(0, 234, 255, 0.2);
+}
+.weekend {
+  width: 75px;
+  text-align: center;
+  border: 1px solid black;
+  border-top: 0;
+}
+.weekendHeader {
+  border: 1px solid black;
+  border-top: 0;
+}
+.form_container {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  height: 470px;
+  grid-column-gap: 10px;
+}
+.remove_modal {
+  width: 300px;
+  height: 150px;
+  grid-column-gap: 10px;
+  text-align: center;
+}
+
+input {
+  height: 14px !important;
+  padding: 6px;
+  margin: 5px 0px;
+  margin-right: 10px !important;
+}
+button {
+  height: 32px !important;
+  width: 120px !important;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 6px;
+  margin: 5px 0px;
+  margin-right: 10px !important;
+  color: white;
+  background-color: cornflowerblue;
+  cursor: pointer;
+  transition-delay: 0.1s;
+}
+button:hover {
+  --translate-y: -2px;
+  box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.5);
+  border-color: dimgray;
+}
+select {
+  height: 32px !important;
+  padding: 6px;
+  margin: 5px 0px;
+  margin-right: 10px !important;
+  cursor: pointer;
+}
+
+.rejectBtn {
+  background-color: coral;
+  color: black;
+}
+.submitLine {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
