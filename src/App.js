@@ -125,18 +125,21 @@ export const App = () => {
     }
     setShowRemoveModal(false);
   };
-  // const resetCalendar = () => {
-  //   setThisMonth(initialMonth);
-  //   setNextMonth(initialNextMonth);
-  // };
-  useEffect(() => {
-    console.log(thisMonth);
-  }, [thisMonth]);
+  const resetCalendar = () => {
+    setThisMonth(initialMonth);
+    setNextMonth(initialNextMonth);
+  };
+  const updateCalendar = () => {
+    setThisMonth(nextMonth);
+    setNextMonth(initialNextMonth);
+  }
+  
   useEffect(() => {
     if (thisMonth.monthId !== initialMonth.monthId) {
       setThisMonth(nextMonth);
       setNextMonth(initialNextMonth);
-    }
+    };
+    console.log(initialMonth.monthId)
     console.log(thisMonth);
     console.log(nextMonth);
   }, []);
@@ -144,7 +147,7 @@ export const App = () => {
     <div className="App">
       <>
         <button onClick={() => setShowForm(true)}>Додати пацієнта</button>
-        {/* <button onClick={resetCalendar}>Очистити кален</button> */}
+        <button onClick={resetCalendar}>Очистити</button>
         <Modal open={showForm}>
           <PatientForm add={addPatient} onClose={() => setShowForm(false)} />
         </Modal>
@@ -214,6 +217,7 @@ export const App = () => {
           )}
         </div>
       </>
+      <button onClick={updateCalendar}>Оновити</button>
     </div>
   );
 };
