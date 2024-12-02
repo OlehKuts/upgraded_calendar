@@ -23,7 +23,7 @@ export const patientTemplate = {
   id: "",
   patientName: "",
   day: date.getDate(),
-  month: getRightMonth(date.getMonth()),
+  month: date.getMonth() + 1,
   year: date.getFullYear(),
   time: ``,
   operation: "",

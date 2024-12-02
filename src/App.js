@@ -70,8 +70,6 @@ export const App = () => {
         return { ...prev, dayList: newList };
       });
     }
-
-    console.log(patient.month, month);
   };
   const updateRemovingData = (
     patientId,
@@ -82,7 +80,7 @@ export const App = () => {
     setRemovingData({
       patientId: patientId,
       dayNumber: dayNumber,
-      monthNumber: monthNumber,
+      monthNumber: Number(monthNumber),
       patientName: patientName,
     });
     setShowRemoveModal(true);
@@ -125,21 +123,16 @@ export const App = () => {
     }
     setShowRemoveModal(false);
   };
-  const resetCalendar = () => {
-    setThisMonth(initialMonth);
-    setNextMonth(initialNextMonth);
-  };
+  // const resetCalendar = () => {
+  //   setThisMonth(initialMonth);
+  //   setNextMonth(initialNextMonth);
+  // };
   const updateCalendar = () => {
     setThisMonth(nextMonth);
     setNextMonth(initialNextMonth);
   }
   
   useEffect(() => {
-    if (thisMonth.monthId !== initialMonth.monthId) {
-      setThisMonth(nextMonth);
-      setNextMonth(initialNextMonth);
-    };
-    console.log(initialMonth.monthId)
     console.log(thisMonth);
     console.log(nextMonth);
   }, []);
@@ -147,7 +140,7 @@ export const App = () => {
     <div className="App">
       <>
         <button onClick={() => setShowForm(true)}>Додати пацієнта</button>
-        <button onClick={resetCalendar}>Очистити</button>
+        {/* <button onClick={resetCalendar}>Очистити</button> */}
         <Modal open={showForm}>
           <PatientForm add={addPatient} onClose={() => setShowForm(false)} />
         </Modal>
