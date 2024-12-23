@@ -1,11 +1,18 @@
 import { useFormFields } from "../custom_hooks/useFormFields";
 import { patientTemplate, doctors } from "../initialData/formData";
 
-export const PatientForm = ({ add, onClose }) => {
-  const { fields, changeField, clearForm } = useFormFields(patientTemplate);
+export const PatientForm = ({ add, onClose, clickedDay, clickedMonth }) => {
+  let mutedPatientTemplate = {
+    ...patientTemplate,
+    day: clickedDay,
+    month: clickedMonth,
+  };
+  const { fields, changeField, clearForm } =
+    useFormFields(mutedPatientTemplate);
+  // const day = 11;
   const {
     patientName,
-    day,
+    day = 11,
     month,
     year,
     time,

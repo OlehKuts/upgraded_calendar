@@ -2,7 +2,14 @@ import React from "react";
 import { VisitLine } from "./VisitLine";
 import { EmptyCell } from "./EmptyCell";
 
-export const DayItem = ({ currentDay, index, removePatient }) => {
+export const DayItem = ({
+  currentDay,
+  index,
+  removePatient,
+  openAddForm,
+  month,
+  today,
+}) => {
   const { dayNumber, patients } = currentDay;
   return (
     <>
@@ -17,11 +24,17 @@ export const DayItem = ({ currentDay, index, removePatient }) => {
           {" "}
           {dayNumber ? (
             <>
-              <div className="dayItem">
+              <div
+                className="dayItem"
+                onClick={() => openAddForm(dayNumber, month)}
+              >
                 <VisitLine
                   isUsual={false}
                   date={dayNumber}
                   patient={patients[0]}
+                  openAddForm={openAddForm}
+                  today={today}
+                  dayNumber={dayNumber}
                 />
                 {patients.map((item, index) => (
                   <VisitLine
@@ -29,7 +42,11 @@ export const DayItem = ({ currentDay, index, removePatient }) => {
                     isUsual={true}
                     patient={item}
                     removePatient={removePatient}
+                    openAddForm={openAddForm}
                     date={dayNumber}
+                    curMonth={month}
+                    dayNumber={dayNumber}
+                    today={today}
                   />
                 ))}
               </div>{" "}

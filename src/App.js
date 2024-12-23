@@ -20,6 +20,9 @@ export const App = () => {
   const date = new Date();
   const year = date.getFullYear();
   const month = date.getMonth() + 1;
+  const today = date.getDate();
+  const [clickedDay, setClickedDay] = useState(today);
+  const [clickedMonth, setClickedMonth] = useState(month)
   const initialMonth = {
     dayList: createMonthlyList(year, month - 1),
     monthId: `${month}_${year}`,
@@ -71,6 +74,12 @@ export const App = () => {
       });
     }
   };
+  const openAddForm = (dayNumber, monthNumber) => {
+    setClickedDay(dayNumber);
+    setClickedMonth(monthNumber)
+    setShowForm(true)
+
+  }
   const updateRemovingData = (
     patientId,
     dayNumber,
@@ -131,7 +140,6 @@ export const App = () => {
     setThisMonth(nextMonth);
     setNextMonth(initialNextMonth);
   }
-  
   useEffect(() => {
     console.log(thisMonth);
     console.log(nextMonth);
@@ -139,10 +147,11 @@ export const App = () => {
   return (
     <div className="App">
       <>
-        <button onClick={() => setShowForm(true)}>Додати пацієнта</button>
+        {/* <button onClick={() => setShowForm(true)}>Додати пацієнта</button> */}
         {/* <button onClick={resetCalendar}>Очистити</button> */}
         <Modal open={showForm}>
-          <PatientForm add={addPatient} onClose={() => setShowForm(false)} />
+          <PatientForm add={addPatient} onClose={() => setShowForm(false)} clickedDay={clickedDay}
+            clickedMonth={clickedMonth}/>
         </Modal>
         <Modal open={showRemoveModal}>
           <RemoveModal
@@ -164,6 +173,9 @@ export const App = () => {
                   key={index}
                   index={index}
                   removePatient={updateRemovingData}
+                  openAddForm={openAddForm}
+                  month={month}
+                  today={today}
                 />
               ))}{" "}
             </>
@@ -175,6 +187,9 @@ export const App = () => {
                   key={index}
                   index={index}
                   removePatient={updateRemovingData}
+                  openAddForm={openAddForm}
+                  month={month}
+                  today={today}
                 />
               ))}{" "}
             </>
@@ -193,6 +208,9 @@ export const App = () => {
                   key={index}
                   index={index}
                   removePatient={updateRemovingData}
+                  openAddForm={openAddForm}
+                  month={month === 12 ? 1 : month + 1}
+                  today={null}
                 />
               ))}
             </>
@@ -204,6 +222,9 @@ export const App = () => {
                   key={index}
                   index={index}
                   removePatient={updateRemovingData}
+                  openAddForm={openAddForm}
+                  month={month === 12 ? 1 : month + 1}
+                  today={null}
                 />
               ))}
             </>

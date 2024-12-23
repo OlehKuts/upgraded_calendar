@@ -1,5 +1,14 @@
 import { fullNameCutter } from "../utils/fullNameCutter";
-export const VisitLine = ({ isUsual, date, patient, removePatient }) => {
+export const VisitLine = ({
+  isUsual,
+  date,
+  patient,
+  removePatient,
+  openAddForm,
+  dayNumber,
+  curMonth,
+  today,
+}) => {
   const {
     patientName = "",
     time = "",
@@ -7,7 +16,7 @@ export const VisitLine = ({ isUsual, date, patient, removePatient }) => {
     doctor = "",
     phoneNumber = "",
     id = "",
-    month = ""
+    month = "",
     // notes
   } = patient;
   const backCl =
@@ -18,8 +27,12 @@ export const VisitLine = ({ isUsual, date, patient, removePatient }) => {
       : doctor === "Олег"
       ? `cornsilk`
       : "white";
-  const allowRemove = () => {
-    if (!patientName) return;
+  const allowRemove = (e) => {
+    e.stopPropagation();
+    if (!patientName) {
+      openAddForm(dayNumber, curMonth);
+      return;
+    }
     removePatient(id, date, month, patientName);
   };
   return (
@@ -44,7 +57,14 @@ export const VisitLine = ({ isUsual, date, patient, removePatient }) => {
         </>
       ) : (
         <>
-          <div id="dateLine">{date}</div>
+          <div
+            id="dateLine"
+            style={{
+              backgroundColor: today === dayNumber ? "springGreen" : "white",
+            }}
+          >
+            {date}
+          </div>
         </>
       )}
     </div>
