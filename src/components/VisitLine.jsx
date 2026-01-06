@@ -21,7 +21,7 @@ export const VisitLine = ({
   } = patient;
   const backCl =
     doctor === "Володя"
-      ? `lavenderBlush`
+      ? `honeyDew`
       : doctor === "Іван"
       ? `aliceBlue`
       : doctor === "Олег"
@@ -36,22 +36,21 @@ export const VisitLine = ({
     removePatient(id, date, month, patientName);
   };
   return (
-    <div className="visitLine">
+    <div className="visitLine" style={{ backgroundColor: backCl}}>
       {isUsual ? (
         <>
           <div
             className="emptyField"
-            style={{ backgroundColor: backCl }}
             onClick={allowRemove}
           >
-            <div>{fullNameCutter(patientName)}</div>
-            <div>{operation}</div>
-            <div>{phoneNumber}</div>
+            <div className="visitField">{fullNameCutter(patientName)}</div>
+            <div className="visitField">{operation}</div>
+            <div className="visitField">{phoneNumber}</div>
           </div>
-          <div className="visitTime" style={{ backgroundColor: backCl }}>
+          <div className="visitTime">
             {time}
           </div>
-          <div className="visitTime" style={{ backgroundColor: backCl }}>
+          <div className="visitTime" >
             {doctor}
           </div>
         </>

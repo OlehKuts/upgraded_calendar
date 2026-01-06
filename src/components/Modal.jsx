@@ -1,5 +1,3 @@
-import React from "react";
-import "../styles.css";
 import ReactDom from "react-dom";
 
 export const Modal = ({ open, children, onClose }) => {

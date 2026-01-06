@@ -1,4 +1,3 @@
-import React from "react";
 import { VisitLine } from "./VisitLine";
 import { EmptyCell } from "./EmptyCell";
 

@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { useFormFields } from "../custom_hooks/useFormFields";
 import { patientTemplate, doctors } from "../initialData/formData";
 
@@ -9,7 +10,7 @@ export const PatientForm = ({ add, onClose, clickedDay, clickedMonth }) => {
   };
   const { fields, changeField, clearForm } =
     useFormFields(mutedPatientTemplate);
-  // const day = 11;
+  const firstInput = useRef(null);
   const {
     patientName,
     day = 11,
@@ -43,12 +44,18 @@ export const PatientForm = ({ add, onClose, clickedDay, clickedMonth }) => {
     onClose();
     clearForm();
   };
+  useEffect(() => {
+    if(firstInput.current){
+      firstInput.current.focus()
+    }
+  }, [])
   return (
     <>
       <form onSubmit={handleSubmit}>
         <div className="form_container">
           <label htmlFor="patientName">ПІБ пацієнта</label>
           <input
+            ref={firstInput}
             name="patientName"
             value={patientName}
             onChange={changeField}
@@ -105,12 +112,18 @@ export const PatientForm = ({ add, onClose, clickedDay, clickedMonth }) => {
             })}
           </select>
         </div>
-        <div className="submitLine">
-          <button type="submit">Додати пацієнта</button>
+        {/* <div className="submitLine"> */}
+          {/* <button type="submit">Додати пацієнта</button>
           <button className="rejectBtn" onClick={onFormClose}>
             Скасувати
-          </button>
-        </div>
+          </button> */}
+           <div className="modalBtnLine">
+        <button type="submit" className="btn btn-success">
+          Додати пацієнта
+        </button>
+        <button onClick={onFormClose} className="btn btn-outline-secondary">Відміна</button>
+      </div>
+        {/* </div> */}
       </form>
     </>
   );
