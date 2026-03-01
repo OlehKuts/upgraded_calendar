@@ -112,18 +112,12 @@ export const PatientForm = ({ add, onClose, clickedDay, clickedMonth }) => {
             })}
           </select>
         </div>
-        {/* <div className="submitLine"> */}
-          {/* <button type="submit">Додати пацієнта</button>
-          <button className="rejectBtn" onClick={onFormClose}>
-            Скасувати
-          </button> */}
            <div className="modalBtnLine">
         <button type="submit" className="btn btn-success">
           Додати пацієнта
         </button>
         <button onClick={onFormClose} className="btn btn-outline-secondary">Відміна</button>
       </div>
-        {/* </div> */}
       </form>
     </>
   );

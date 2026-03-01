@@ -175,7 +175,7 @@ export const App = () => {
           setShowUpdateModal(false);
           updateCalendar()
         }} className="btn btn-danger">
-          Видалити
+          Оновити
         </button>
         <button onClick={() => setShowUpdateModal(false)} className="btn btn-warning">Відміна</button>
       </div>
