@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/upgraded_calendar/static/css/main.4088d319.css",
-    "main.js": "/upgraded_calendar/static/js/main.4f9fc7e0.js",
+    "main.css": "/upgraded_calendar/static/css/main.7b968283.css",
+    "main.js": "/upgraded_calendar/static/js/main.2e82204d.js",
     "index.html": "/upgraded_calendar/index.html",
-    "main.4088d319.css.map": "/upgraded_calendar/static/css/main.4088d319.css.map",
-    "main.4f9fc7e0.js.map": "/upgraded_calendar/static/js/main.4f9fc7e0.js.map"
+    "main.7b968283.css.map": "/upgraded_calendar/static/css/main.7b968283.css.map",
+    "main.2e82204d.js.map": "/upgraded_calendar/static/js/main.2e82204d.js.map"
   },
   "entrypoints": [
-    "static/css/main.4088d319.css",
-    "static/js/main.4f9fc7e0.js"
+    "static/css/main.7b968283.css",
+    "static/js/main.2e82204d.js"
   ]
 }
