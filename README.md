@@ -14,11 +14,8 @@
 
 ## 📸 Screenshots
 
-![Filled Calendar][calendar_screen]
-![Add Event Form][form_screen]
-
-[calendar_screen]: ./assets/Calendar_filled.png
-[form_screen]: ./assets/Calendar_form.png
+![Calendar](./assets/Calendar_filled.png)
+![Form](./assets/Calendar_form.png)
 
 ## 🛠 Tech Stack
 
