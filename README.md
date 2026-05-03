@@ -14,8 +14,8 @@
 
 ## 📸 Screenshots
 
-![Calendar](./assets/Calendar_filled.png)
-![Form](./assets/Calendar_form.png)
+![Calendar](./assets/Calendar_Filled.png)
+![Form](./assets/Calendar_Form.png)
 
 ## 🛠 Tech Stack
 
