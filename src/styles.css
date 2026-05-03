@@ -63,7 +63,7 @@ h2 {
 }
 #dateLine {
   text-align: center;
-  width: 100%
+  width: 100%;
 }
 .calendarContainer {
   margin: 0 auto;
@@ -128,10 +128,22 @@ button:hover {
   width: 80%;
   margin: 20px auto;
 }
-.modalBtnLine button{
+.modalBtnLine button {
   margin: 10px;
 }
 .modalBtnLine {
+  display: flex;
+  justify-content: center;
+}
+.footerBtnLine {
+  display: flex;
+  width: 400px;
+  justify-content: center;
+  margin: 0 auto;
+  column-gap: 10px;
+}
+.doctorsArea {
+  margin: 10px auto;
   display: flex;
   justify-content: center;
 }

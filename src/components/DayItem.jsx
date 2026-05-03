@@ -8,6 +8,7 @@ export const DayItem = ({
   openAddForm,
   month,
   today,
+  doctors,
 }) => {
   const { dayNumber, patients } = currentDay;
   return (
@@ -34,6 +35,7 @@ export const DayItem = ({
                   openAddForm={openAddForm}
                   today={today}
                   dayNumber={dayNumber}
+                  doctors={doctors}
                 />
                 {patients.map((item, index) => (
                   <VisitLine
@@ -46,6 +48,7 @@ export const DayItem = ({
                     curMonth={month}
                     dayNumber={dayNumber}
                     today={today}
+                    doctors={doctors}
                   />
                 ))}
               </div>{" "}

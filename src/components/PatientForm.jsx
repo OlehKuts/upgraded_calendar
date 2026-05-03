@@ -1,8 +1,14 @@
 import { useEffect, useRef } from "react";
 import { useFormFields } from "../custom_hooks/useFormFields";
-import { patientTemplate, doctors } from "../initialData/formData";
+import { patientTemplate } from "../initialData/formData";
 
-export const PatientForm = ({ add, onClose, clickedDay, clickedMonth }) => {
+export const PatientForm = ({
+  add,
+  onClose,
+  clickedDay,
+  clickedMonth,
+  doctors,
+}) => {
   let mutedPatientTemplate = {
     ...patientTemplate,
     day: clickedDay,
@@ -45,10 +51,10 @@ export const PatientForm = ({ add, onClose, clickedDay, clickedMonth }) => {
     clearForm();
   };
   useEffect(() => {
-    if(firstInput.current){
-      firstInput.current.focus()
+    if (firstInput.current) {
+      firstInput.current.focus();
     }
-  }, [])
+  }, []);
   return (
     <>
       <form onSubmit={handleSubmit}>
@@ -103,21 +109,23 @@ export const PatientForm = ({ add, onClose, clickedDay, clickedMonth }) => {
 
           <label htmlFor="doctor">Лікар</label>
           <select name="doctor" onChange={changeField} value={doctor} required>
-            {doctors.map((item, index) => {
+            {doctors.map(({ id, title, value }) => {
               return (
-                <option key={index} value={item.value}>
-                  {item.name}
+                <option key={id} value={value}>
+                  {title}
                 </option>
               );
             })}
           </select>
         </div>
-           <div className="modalBtnLine">
-        <button type="submit" className="btn btn-success">
-          Додати пацієнта
-        </button>
-        <button onClick={onFormClose} className="btn btn-outline-secondary">Відміна</button>
-      </div>
+        <div className="modalBtnLine">
+          <button type="submit" className="btn btn-success">
+            Додати пацієнта
+          </button>
+          <button onClick={onFormClose} className="btn btn-outline-secondary">
+            Відміна
+          </button>
+        </div>
       </form>
     </>
   );

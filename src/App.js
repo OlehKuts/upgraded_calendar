@@ -15,18 +15,27 @@ import { compareNumbers } from "./utils/compareNumbers";
 import { transformPatient } from "./utils/transformPatient";
 import { PatientToast } from "./components/PatientToast";
 import Alert from "react-bootstrap/Alert";
+import { assignIds } from "./utils/assignIds";
+import { initDoctors } from "./initialData/formData";
+import { useDate } from "./custom_hooks/useDate";
 
 export const App = () => {
   const [showForm, setShowForm] = useState(false);
   const [showRemoveModal, setShowRemoveModal] = useState(false);
-  const [showUpdateModal, setShowUpdateModal] = useState(false)
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const [showDoctorsModal, setShowDoctorsModal] = useState(false);
 
-  const date = new Date();
-  const year = date.getFullYear();
-  const month = date.getMonth() + 1;
-  const today = date.getDate();
+  const [doctors, setDoctors] = useLocalStorage(
+    "calendar_doctors",
+    assignIds(initDoctors),
+  );
+  const stringifiedDoctors = doctors.length
+    ? doctors.map((item) => item.value).filter((item) => item)
+    : initDoctors;
+  const [newDoctors, setNewDoctors] = useState(stringifiedDoctors.join(","));
+  const { year, month, today } = useDate();
   const [clickedDay, setClickedDay] = useState(today);
-  const [clickedMonth, setClickedMonth] = useState(month)
+  const [clickedMonth, setClickedMonth] = useState(month);
   const initialMonth = {
     dayList: createMonthlyList(year, month - 1),
     monthId: `${month}_${year}`,
@@ -35,7 +44,7 @@ export const App = () => {
   const initialNextMonth = {
     dayList: createMonthlyList(
       getRightYear(month - 1, year),
-      getRightMonth(month - 1)
+      getRightMonth(month - 1),
     ),
     monthId: `${getRightMonth(month - 1)}_${getRightYear(month - 1, year)}`,
     monthName: getMonthName(getRightMonth(month - 1), months),
@@ -43,10 +52,17 @@ export const App = () => {
   const [thisMonth, setThisMonth] = useLocalStorage("thisMonth", initialMonth);
   const [nextMonth, setNextMonth] = useLocalStorage(
     "nextMonth",
-    initialNextMonth
+    initialNextMonth,
   );
+
+  const updateDoctors = () => {
+    const splittedDoctors = newDoctors.split(",");
+    setDoctors(assignIds(splittedDoctors));
+    setShowDoctorsModal(false);
+    alert("Список лікарів оновлено!");
+  };
   const [removingData, setRemovingData] = useState({});
-  const [patientsData, setPatientsData] = useLocalStorage("patientsData", [])
+  const [patientsData, setPatientsData] = useLocalStorage("patientsData", []);
 
   const assistAddPatient = (patient, someMonth) => {
     let newList = [];
@@ -65,10 +81,14 @@ export const App = () => {
   };
 
   const addPatient = (patient) => {
-    if(patient.phoneNumber) {
-       setPatientsData(prev => (prev.length < 100 ? [transformPatient(patient),...prev] : 
-      [...prev].map((item, idx, arr) => (idx === arr.length - 1 ? transformPatient(patient) : item))
-    ));
+    if (patient.phoneNumber) {
+      setPatientsData((prev) =>
+        prev.length < 100
+          ? [transformPatient(patient), ...prev]
+          : [...prev].map((item, idx, arr) =>
+              idx === arr.length - 1 ? transformPatient(patient) : item,
+            ),
+      );
     }
     let newList = [];
     if (Number(patient.month) === month) {
@@ -85,25 +105,23 @@ export const App = () => {
   };
   const openAddForm = (dayNumber, monthNumber) => {
     setClickedDay(dayNumber);
-    setClickedMonth(monthNumber)
-    setShowForm(true)
-
-  }
+    setClickedMonth(monthNumber);
+    setShowForm(true);
+  };
   const updateRemovingData = (
     patientId,
     dayNumber,
     monthNumber,
-    patientName
+    patientName,
   ) => {
     setRemovingData({
       patientId,
       dayNumber,
       monthNumber: Number(monthNumber),
-      patientName
+      patientName,
     });
     setShowRemoveModal(true);
   };
-  // refactor removePatient
 
   const assistRemovePatient = (rmvData, someMonth) => {
     const { dayNumber, patientId } = rmvData;
@@ -111,7 +129,7 @@ export const App = () => {
     newList = someMonth.dayList.map((item) => {
       if (dayNumber === item.dayNumber) {
         const intermediate = item.patients.filter(
-          (pat) => pat.id !== patientId
+          (pat) => pat.id !== patientId,
         );
         const newPatients =
           intermediate.length === 0 ? [patientTemplate] : intermediate;
@@ -144,20 +162,24 @@ export const App = () => {
   const updateCalendar = () => {
     setThisMonth(nextMonth);
     setNextMonth(initialNextMonth);
-  }
+  };
   const deleteToast = (patientId) => {
-    setPatientsData(prev => [...prev].filter(item => item.id !== patientId))
-  }
-  useEffect(() => {
-    console.log(thisMonth);
-    console.log(nextMonth);
-  }, []);
+    setPatientsData((prev) =>
+      [...prev].filter((item) => item.id !== patientId),
+    );
+  };
+  console.log(year, month, today);
   return (
     <div className="App">
       <>
         <Modal open={showForm}>
-          <PatientForm add={addPatient} onClose={() => setShowForm(false)} clickedDay={clickedDay}
-            clickedMonth={clickedMonth}/>
+          <PatientForm
+            add={addPatient}
+            onClose={() => setShowForm(false)}
+            clickedDay={clickedDay}
+            clickedMonth={clickedMonth}
+            doctors={doctors}
+          />
         </Modal>
         <Modal open={showRemoveModal}>
           <RemoveModal
@@ -166,20 +188,54 @@ export const App = () => {
             patientName={removingData.patientName}
           />
         </Modal>
-         <Modal open={showUpdateModal}>
+        <Modal open={showUpdateModal}>
           <Alert variant="danger">
-          Ви впевнені, що хочете оновити календар, встановивши наступний місяць?
-        </Alert>
-         <div className="modalBtnLine">
-        <button onClick={() => {
-          setShowUpdateModal(false);
-          updateCalendar()
-        }} className="btn btn-danger">
-          Оновити
-        </button>
-        <button onClick={() => setShowUpdateModal(false)} className="btn btn-warning">Відміна</button>
-      </div>
-
+            Ви впевнені, що хочете оновити календар, встановивши наступний
+            місяць?
+          </Alert>
+          <div className="modalBtnLine">
+            <button
+              onClick={() => {
+                setShowUpdateModal(false);
+                updateCalendar();
+              }}
+              className="btn btn-danger"
+            >
+              Оновити
+            </button>
+            <button
+              onClick={() => setShowUpdateModal(false)}
+              className="btn btn-warning"
+            >
+              Відміна
+            </button>
+          </div>
+        </Modal>
+        <Modal open={showDoctorsModal}>
+          <Alert variant="success">
+            Відредагуйте список лікарів, вказавши їх імена через кому (без
+            пробілів)
+          </Alert>
+          <div className="doctorsArea">
+            <textarea
+              name="doctors"
+              rows={3}
+              cols={60}
+              value={newDoctors}
+              onChange={(e) => setNewDoctors(e.target.value)}
+            />
+          </div>
+          <div className="modalBtnLine">
+            <button onClick={updateDoctors} className="btn btn-danger">
+              Застосувати зміни
+            </button>
+            <button
+              onClick={() => setShowDoctorsModal(false)}
+              className="btn btn-warning"
+            >
+              Відміна
+            </button>
+          </div>
         </Modal>
         <h2>{thisMonth.monthName}</h2>
         <Header />
@@ -197,6 +253,7 @@ export const App = () => {
                   openAddForm={openAddForm}
                   month={month}
                   today={today}
+                  doctors={doctors}
                 />
               ))}{" "}
             </>
@@ -252,12 +309,34 @@ export const App = () => {
           )}
         </div>
       </>
-      <button className="btn btn-outline-primary mt-3" onClick={() => setShowUpdateModal(true)}>Оновити календар</button>
+      <div className="footerBtnLine">
+        <button
+          className="btn btn-outline-primary mt-3 mr-3"
+          onClick={() => setShowUpdateModal(true)}
+        >
+          Оновити календар
+        </button>
+        <button
+          className="btn btn-outline-warning mt-3"
+          onClick={() => setShowDoctorsModal(true)}
+        >
+          Редагувати список лікарів
+        </button>
+      </div>
+      <hr />
+      <div>
+        <h5>Збережені пацієнти</h5>
+      </div>
       <div className="toastsCont">
-        {patientsData.map(item => 
-          <PatientToast key={item.id} patient={item} deleteToast={deleteToast}/>
-      )
-        }
+        {patientsData.length
+          ? patientsData.map((item) => (
+              <PatientToast
+                key={item.id}
+                patient={item}
+                deleteToast={deleteToast}
+              />
+            ))
+          : null}
       </div>
     </div>
   );

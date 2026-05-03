@@ -31,11 +31,13 @@ export const patientTemplate = {
   phoneNumber: "",
   notes: "",
 };
-export const doctors = [
-  { name: "Особистий лікар", value: "" },
-  { name: "В.Я.Кучмій", value: "Володя" },
-  { name: "І.І.Піх", value: "Іван" },
-  { name: "О.В.Куц", value: "Олег" },
-  { name: "В.А.Панченко", value: "Валерій" },
-  { name: "Інший", value: "Інший" },
+export const backgroundColors = [
+  "honeydew",
+  "aliceblue",
+  "cornsilk",
+  "oldlace",
+  "lavenderblush",
+  "mistyRose",
+  "mintcream",
 ];
+export const initDoctors = ["Лікар_1", "Лікар_2", "Лікар_3"];
